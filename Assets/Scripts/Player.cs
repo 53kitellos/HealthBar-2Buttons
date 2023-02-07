@@ -6,7 +6,6 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     [SerializeField] private int _health;
-
     private int _currentHealth;
     private int _zeroLife = 0;
 
@@ -16,20 +15,20 @@ public class Player : MonoBehaviour
     {
         _currentHealth = _health;
     }
-   
-    public void ApplyValueChange(int value)
-    {
-        _currentHealth += value;
 
-        if (_currentHealth < _zeroLife)
-        {
-            _currentHealth = _zeroLife;
-        }
-        else if (_currentHealth > _health) 
-        {
-            _currentHealth = _health;
-        }
-        
+    public void Heal(int value)
+    {
+        ApplyValueChange(value);
+    }
+
+    public void Damage(int value)
+    {
+        ApplyValueChange(-value);
+    }
+
+    private void ApplyValueChange(int value)
+    {
+        _currentHealth = Mathf.Clamp(_currentHealth += value, _zeroLife, _health);
         HealthChanged?.Invoke(_currentHealth, _health);
     }
 }
