@@ -5,15 +5,16 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int _health;
+    [SerializeField] private int _maxHealth;
+
     private int _currentHealth;
-    private int _zeroLife = 0;
+    private int _zeroHealth = 0;
 
     public event UnityAction<int,int> HealthChanged;
 
     private void Start()
     {
-        _currentHealth = _health;
+        _currentHealth = _maxHealth;
     }
 
     public void Heal(int value)
@@ -28,7 +29,7 @@ public class Player : MonoBehaviour
 
     private void ApplyValueChange(int value)
     {
-        _currentHealth = Mathf.Clamp(_currentHealth += value, _zeroLife, _health);
-        HealthChanged?.Invoke(_currentHealth, _health);
+        _currentHealth = Mathf.Clamp(_currentHealth += value, _zeroHealth, _maxHealth);
+        HealthChanged?.Invoke(_currentHealth, _maxHealth);
     }
 }
